@@ -91,14 +91,4 @@ class UserDetail(APIView):
                 "message": userSerializer.errors
             })
             
-    def delete(self, request, id):
-        
-        userObject = User.objects.filter(id=id).first()
-        
-        userObject.delete()
-        
-        return JsonResponse({
-            "error": False,
-            "data": None,
-            "message": "Data deleted successfully"
-        })
+    

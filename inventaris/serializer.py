@@ -59,3 +59,16 @@ class MaintenanceSerializer(serializers.ModelSerializer):
             'maintenanceVendor',
             'staffPic'
         ]
+
+class MaintenanceShowSerializer(serializers.ModelSerializer):
+    inventoryId = InventoryShowSerializer()
+    staffPic = StaffSerializer()
+    class Meta:
+        model = MaintenanceInventory
+        fields = (
+           'id',
+            'inventoryId',
+            'maintenanceDate',
+            'maintenanceVendor',
+            'staffPic'
+        )

@@ -71,7 +71,7 @@ class DetailInventory(APIView):
 
         inventoryObj = Inventory.objects.filter(id=id).first()
 
-        inventorySerializer = InventoryShowSerializer(inventoryObj, data={
+        inventorySerializer = InventorySerializer(inventoryObj, data={
             "id": body['id'],
             "name": body['name'],
             "quantity": body['quantity'],

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from inventaris.models import MaintenanceInventory
-from inventaris.serializer import MaintenanceSerializer
+from inventaris.serializer import MaintenanceSerializer, MaintenanceShowSerializer
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
@@ -25,6 +25,7 @@ class Main(APIView):
         body = request.data
 
         maintenanceSerializer = MaintenanceSerializer(data={
+            "id": body['id'],
             "inventoryId": body['inventoryId'],
             "maintenanceDate": body['maintenanceDate'],
             "maintenanceVendor": body['maintenanceVendor'],
@@ -51,16 +52,15 @@ class DetailMaintenance(APIView):
 
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, id):
-        def get(self, request, id):
-            detailMaintenanceObj = MaintenanceInventory.objects.filter(id=id).first()
+    def get(self,request, id):
+        detailMaintenanceObj = MaintenanceInventory.objects.filter(id=id).first()
 
-            detailMaintenanceSerializer = MaintenanceSerializer(detailMaintenanceObj).data
+        detailMaintenanceSerializer = MaintenanceShowSerializer(detailMaintenanceObj)
             
-            return JsonResponse({
-                'error': False,
-                'data': detailMaintenanceSerializer
-            })
+        return JsonResponse({
+            'error': False,
+            'data': detailMaintenanceSerializer.data
+        })
     
     def put(self, request, id):
         body = request.data
