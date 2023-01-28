@@ -3,10 +3,13 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from inventaris.models import Inventory
 from inventaris.serializer import InventorySerializer, InventoryShowSerializer
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class Main(APIView):
 
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         inventoryObj = Inventory.objects.all()
 
@@ -50,6 +53,8 @@ class Main(APIView):
             })
         
 class DetailInventory(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
         inventoryObj = Inventory.objects.filter(id=id).first()

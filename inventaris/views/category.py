@@ -3,9 +3,12 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from inventaris.models import Category
 from inventaris.serializer import CategorySerializer
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class Index(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         categoryObj = Category.objects.all()
@@ -43,6 +46,8 @@ class Index(APIView):
             })
         
 class DetailCategory(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
         categoryObj = Category.objects.filter(id=id).first()

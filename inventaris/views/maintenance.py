@@ -3,9 +3,12 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from inventaris.models import MaintenanceInventory
 from inventaris.serializer import MaintenanceSerializer
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class Main(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         maintenanceObj = MaintenanceInventory.objects.all()
@@ -45,6 +48,8 @@ class Main(APIView):
             })
         
 class DetailMaintenance(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
         def get(self, request, id):
