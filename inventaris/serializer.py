@@ -19,8 +19,8 @@ class InventorySerializer(serializers.ModelSerializer):
             'code',
             'category',
             'tipe',
-            'purchasePrice',
-            'purchaseYear'            
+            'purchase_price',
+            'purchase_year'            
         ]
 
 class InventoryShowSerializer(serializers.ModelSerializer):
@@ -35,8 +35,8 @@ class InventoryShowSerializer(serializers.ModelSerializer):
             'quantity',
             'code',
             'tipe',
-            'purchasePrice',
-            'purchaseYear',
+            'purchase_price',
+            'purchase_year',
             'category'            
         ]
 
@@ -54,21 +54,21 @@ class MaintenanceSerializer(serializers.ModelSerializer):
         model = MaintenanceInventory
         fields = [
             'id',
-            'inventoryId',
-            'maintenanceDate',
-            'maintenanceVendor',
-            'staffPic'
+            'inventory',
+            'maintenance_date',
+            'maintenance_vendor',
+            'staff_pic'
         ]
 
 class MaintenanceShowSerializer(serializers.ModelSerializer):
-    inventoryId = InventoryShowSerializer()
-    staffPic = StaffSerializer()
+    inventory = InventoryShowSerializer()
+    staff_pic = StaffSerializer()
     class Meta:
         model = MaintenanceInventory
         fields = (
-           'id',
-            'inventoryId',
-            'maintenanceDate',
-            'maintenanceVendor',
-            'staffPic'
+            'id',
+            'inventory',
+            'maintenance_date',
+            'maintenance_vendor',
+            'staff_pic'
         )

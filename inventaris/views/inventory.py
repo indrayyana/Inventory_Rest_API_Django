@@ -11,13 +11,13 @@ class Main(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
-        inventoryObj = Inventory.objects.all()
+        inventory_obj = Inventory.objects.all()
 
-        inventorySerializer = InventorySerializer(inventoryObj, many=True).data
+        inventory_serializer = InventorySerializer(inventory_obj, many=True)
 
         return JsonResponse({
             "error": False,
-            "data": inventorySerializer,
+            "data": inventory_serializer.data,
             "message": "Get data successfully"
         })
 
@@ -25,23 +25,22 @@ class Main(APIView):
 
         body = request.data
 
-        inventorySerializer = InventorySerializer(data={
-            "id": body['id'],
+        inventory_serializer = InventorySerializer(data={
             "name": body['name'],
             "quantity": body['quantity'],
             "code": body['code'],
             "tipe": body['tipe'],
-            "purchasePrice": body['purchasePrice'],
-            "purchaseYear": body['purchaseYear'],
+            "purchase_price": body['purchase_price'],
+            "purchase_year": body['purchase_year'],
             "category": body['category_id'],
         })
 
-        if inventorySerializer.is_valid():
-            inventorySerializer.save()
+        if inventory_serializer.is_valid():
+            inventory_serializer.save()
 
             return JsonResponse({
                 "error": False,
-                "data": inventorySerializer.data,
+                "data": inventory_serializer.data,
                 "message": "Data saved successfully"
             })
         
@@ -49,7 +48,7 @@ class Main(APIView):
             return JsonResponse({
                 "error": True,
                 "data": None,
-                "message": inventorySerializer.errors
+                "message": inventory_serializer.errors
             })
         
 class DetailInventory(APIView):
@@ -57,51 +56,51 @@ class DetailInventory(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
-        inventoryObj = Inventory.objects.filter(id=id).first()
+        inventory_obj = Inventory.objects.filter(id=id).first()
 
-        inventorySerializer = InventoryShowSerializer(inventoryObj)
+        inventory_serializer = InventoryShowSerializer(inventory_obj)
 
         return JsonResponse({
-            'error': False,
-            'data': inventorySerializer.data
+            "error": False,
+            "data": inventory_serializer.data,
+            "message": "Get data successfully"
         })
     
     def put(self, request, id):
         body = request.data
 
-        inventoryObj = Inventory.objects.filter(id=id).first()
+        inventory_obj = Inventory.objects.filter(id=id).first()
 
-        inventorySerializer = InventorySerializer(inventoryObj, data={
-            "id": body['id'],
+        inventory_serializer = InventorySerializer(inventory_obj, data={
             "name": body['name'],
             "quantity": body['quantity'],
             "code": body['code'],
             "tipe": body['tipe'],
-            "purchasePrice": body['purchasePrice'],
-            "purchaseYear": body['purchaseYear'],
+            "purchase_price": body['purchase_price'],
+            "purchase_year": body['purchase_year'],
             "category": body['category_id'],
         })
 
-        if inventorySerializer.is_valid():
-            inventorySerializer.save()
+        if inventory_serializer.is_valid():
+            inventory_serializer.save()
 
             return JsonResponse({
-                'error': False,
-                'data': inventorySerializer.data,
-                'message': "Data updated successfully"
+                "error": False,
+                "data": inventory_serializer.data,
+                "message": "Data updated successfully"
             })
         
         else: 
             return JsonResponse({
-                'error': True,
-                'data': None,
-                'message': inventorySerializer.errors
+                "error": True,
+                "data": None,
+                "message": inventory_serializer.errors
             })
         
     def delete(self, request, id):
-        inventoryObj = Inventory.objects.filter(id=id).first()
+        inventory_obj = Inventory.objects.filter(id=id).first()
 
-        inventoryObj.delete()
+        inventory_obj.delete()
 
         return JsonResponse({
             "error": False,

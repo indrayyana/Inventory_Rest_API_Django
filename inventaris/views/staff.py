@@ -11,13 +11,13 @@ class Main(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        staffObj = Staff.objects.all()
+        staff_obj = Staff.objects.all()
 
-        staffSerializer = StaffSerializer(staffObj, many=True)
+        staff_serializer = StaffSerializer(staff_obj, many=True)
 
         return JsonResponse({
             "error": False,
-            "data": staffSerializer.data,
+            "data": staff_serializer.data,
             "message": "Get data successfully"
         })
 
@@ -25,18 +25,17 @@ class Main(APIView):
 
         body = request.data
 
-        staffSerializer = StaffSerializer(data={
-            "id": body['id'],
+        staff_serializer = StaffSerializer(data={
             "name": body['name'],
             "role": body['role'],
         })
 
-        if staffSerializer.is_valid():
-            staffSerializer.save()
+        if staff_serializer.is_valid():
+            staff_serializer.save()
 
             return JsonResponse({
                 "error": False,
-                "data": staffSerializer.data,
+                "data": staff_serializer.data,
                 "message": "Data saved successfully"
             })
         
@@ -44,52 +43,52 @@ class Main(APIView):
             return JsonResponse({
                 "error": True,
                 "data": None,
-                "message": staffSerializer.errors
+                "message": staff_serializer.errors
             })
         
 class DetailStaff(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
-        staffObj = Staff.objects.filter(id=id).first()
+        staff_obj = Staff.objects.filter(id=id).first()
 
-        staffSerializer = StaffSerializer(staffObj)
+        staff_serializer = StaffSerializer(staff_obj)
         
         return JsonResponse({
-            'error': False,
-            'data': staffSerializer.data
+            "error": False,
+            "data": staff_serializer.data,
+            "message": "Get data successfully"
         })
     
     def put(self, request, id):
         body = request.data
 
-        staffObj = Staff.objects.filter(id=id).first()
+        staff_obj = Staff.objects.filter(id=id).first()
 
-        staffSerializer = StaffSerializer(staffObj, data={
-            'id': body['id'],
+        staff_serializer = StaffSerializer(staff_obj, data={
             'name': body['name'],
             'role': body['role']
         })
 
-        if staffSerializer.is_valid():
-            staffSerializer.save()
+        if staff_serializer.is_valid():
+            staff_serializer.save()
             
             return JsonResponse({
-                'error': False,
-                'data': staffSerializer.data,
-                'message': "Data updated successfully"
+                "error": False,
+                "data": staff_serializer.data,
+                "message": "Data updated successfully"
             })
         else:
             return JsonResponse({
-                'error': True,
-                'data': None,
-                'message': staffSerializer.errors
+                "error": True,
+                "data": None,
+                "message": staff_serializer.errors
             })
         
     def delete(self, request, id):
-        staffObj = Staff.objects.filter(id=id).first()
+        staff_obj = Staff.objects.filter(id=id).first()
 
-        staffObj.delete()
+        staff_obj.delete()
 
         return JsonResponse({
             "error": False,

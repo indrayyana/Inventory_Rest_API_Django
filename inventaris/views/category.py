@@ -11,30 +11,29 @@ class Index(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        categoryObj = Category.objects.all()
+        category_obj = Category.objects.all()
 
-        categorySerializer = CategorySerializer(categoryObj, many=True).data
+        category_serializer = CategorySerializer(category_obj, many=True)
 
         return JsonResponse({
             "error": False,
-            "data": categorySerializer,
+            "data": category_serializer.data,
             "message": "Get data successfully"
         })
 
     def post(self, request):
         body = request.data
 
-        categorySerializer = CategorySerializer(data={
-            "id": body['id'],
+        category_serializer = CategorySerializer(data={
             "name": body['name']
         })
 
-        if categorySerializer.is_valid():
-            categorySerializer.save()
+        if category_serializer.is_valid():
+            category_serializer.save()
 
             return JsonResponse({
                 "error": False,
-                "data": categorySerializer.data,
+                "data": category_serializer.data,
                 "message": "Data saved successfully"
             })
         
@@ -42,7 +41,7 @@ class Index(APIView):
             return JsonResponse({
                 "error": True,
                 "data": None,
-                "message": categorySerializer.errors
+                "message": category_serializer.errors
             })
         
 class DetailCategory(APIView):
@@ -50,47 +49,47 @@ class DetailCategory(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
-        categoryObj = Category.objects.filter(id=id).first()
+        category_obj = Category.objects.filter(id=id).first()
 
-        categorySerializer = CategorySerializer(categoryObj).data
+        category_serializer = CategorySerializer(category_obj)
         
         return JsonResponse({
-            'error': False,
-            'data': categorySerializer
+            "error": False,
+            "data": category_serializer.data,
+            "message": "Get data successfully"
         })
     
     def put(self, request, id):
         body = request.data
 
-        categoryObj = Category.objects.filter(id=id).first()
+        category_obj = Category.objects.filter(id=id).first()
 
-        categorySerializer = CategorySerializer(categoryObj, data={
-            'id': body['id'],
+        category_serializer = CategorySerializer(category_obj, data={
             'name': body['name']
         })
 
-        if categorySerializer.is_valid():
-            categorySerializer.save()
+        if category_serializer.is_valid():
+            category_serializer.save()
             
             return JsonResponse({
-                'error': False,
-                'data': categorySerializer.data,
-                'message': "Data updated successfully"
+                "error": False,
+                "data": category_serializer.data,
+                "message": "Data updated successfully"
             })
         else:
             return JsonResponse({
-                'error': True,
-                'data': None,
-                'message': categorySerializer.errors
+                "error": True,
+                "data": None,
+                "message": category_serializer.errors
             })
 
     def delete(self, request, id):
-        categoryObj = Category.objects.filter(id=id).first()
+        category_obj = Category.objects.filter(id=id).first()
         
-        categoryObj.delete()
+        category_obj.delete()
 
         return JsonResponse({
-            'error': False,
-            'data': None,
-            'message': 'Data successfully deleted'
+            "error": False,
+            "data": None,
+            "message": 'Data successfully deleted'
         })
