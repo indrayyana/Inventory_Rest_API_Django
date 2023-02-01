@@ -36,9 +36,7 @@ class UserList(APIView):
               "data": user_serializer.data,
               "message": "Data saved successfully"
             })
-            
         else:
-            
             return JsonResponse({
                 "error": True,
                 "data": None,
@@ -56,7 +54,8 @@ class UserDetail(APIView):
         
         return JsonResponse({
             "error": False,
-            "data": user_serializer.data
+            "data": user_serializer.data,
+            "message": "Get data successfully"
         })
         
     def put(self, request, id):
@@ -79,7 +78,6 @@ class UserDetail(APIView):
                 "data": user_serializer.data,
                 "message": "Data updated successfully"
             })
-        
         else :
             return JsonResponse({
                 "data": None,

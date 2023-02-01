@@ -60,6 +60,18 @@ class MaintenanceSerializer(serializers.ModelSerializer):
             'staff_pic'
         ]
 
+class StaffShowSerializer(serializers.ModelSerializer):
+
+    maintenance = MaintenanceSerializer(many=True, source='relasi_staff')
+    class Meta:
+        model = Staff
+        fields = [
+            'id',
+            'name',
+            'role',
+            'maintenance'
+        ]
+
 class MaintenanceShowSerializer(serializers.ModelSerializer):
     inventory = InventoryShowSerializer()
     staff_pic = StaffSerializer()

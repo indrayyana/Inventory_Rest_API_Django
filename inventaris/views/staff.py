@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from inventaris.models import Staff
-from inventaris.serializer import StaffSerializer
+from inventaris.serializer import StaffSerializer, StaffShowSerializer
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
@@ -52,7 +52,7 @@ class DetailStaff(APIView):
     def get(self, request, id):
         staff_obj = Staff.objects.filter(id=id).first()
 
-        staff_serializer = StaffSerializer(staff_obj)
+        staff_serializer = StaffShowSerializer(staff_obj)
         
         return JsonResponse({
             "error": False,
@@ -93,5 +93,5 @@ class DetailStaff(APIView):
         return JsonResponse({
             "error": False,
             "data": None,
-            "message": "Data successfully deleted"
+            "message": "Data deleted successfully"
         })

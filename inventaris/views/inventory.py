@@ -105,5 +105,5 @@ class DetailInventory(APIView):
         return JsonResponse({
             "error": False,
             "data": None,
-            "message": "Data successfully deleted"
+            "message": "Data deleted successfully"
         })
